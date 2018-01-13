@@ -4,20 +4,18 @@ import com.pi4j.io.gpio.*;
 import io.crowdcode.belobog.actuator.ui.service.GPIOService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class GPIOServiceImpl implements GPIOService {
 
     public static final Logger logger = LoggerFactory.getLogger(GPIOServiceImpl.class);
 
-    private final ConfigurationService configurationService;
-
     private GpioController gpio;
     private GpioPinDigitalOutput[] pins;
 
-    public GPIOServiceImpl(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
-    }
+    @Autowired
+    ConfigurationService configurationService;
 
     public void postConstruct() {
         // create gpio controller
