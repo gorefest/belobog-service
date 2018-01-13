@@ -1,6 +1,8 @@
 package io.crowdcode.belobog.actuator.ui.service.impl;
 
 import io.crowdcode.belobog.actuator.ui.service.GPIOService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -13,6 +15,8 @@ import java.util.Date;
 
 @Service
 public class ConfigurationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurationService.class);
 
     @Value("${application.messages.welcome}")
     private String applicationWelcome;
@@ -55,6 +59,8 @@ public class ConfigurationService {
 
     @PostConstruct
     public void postConstruct(){
+
+
 
         slotDisabledStyles=new String[numberOfSlots];
         slotEnabledStyles=new String[numberOfSlots];

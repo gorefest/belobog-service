@@ -57,11 +57,11 @@ public class BelobogServiceApplication {
 
 
 	@Bean
-	public GPIOService gpioService(ConfigurationService configurationService){
+	public GPIOService gpioService(){
 		if (applicationMode.equals(ApplicationMode.milkrun)) {
 			return new GPIOFakeServiceImpl();
 		} else if (applicationMode.equals(ApplicationMode.live)) {
-			GPIOServiceImpl gpioService = new GPIOServiceImpl(configurationService);
+			GPIOServiceImpl gpioService = new GPIOServiceImpl();
 			gpioService.postConstruct();
 			return gpioService;
 		} else {
