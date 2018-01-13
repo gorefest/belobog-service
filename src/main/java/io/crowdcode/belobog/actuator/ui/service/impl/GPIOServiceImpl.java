@@ -14,11 +14,9 @@ public class GPIOServiceImpl implements GPIOService {
 
     private GpioController gpio;
     private GpioPinDigitalOutput[] pins;
-    private boolean[] enabledPins;
 
     public GPIOServiceImpl(ConfigurationService configurationService) {
         this.configurationService = configurationService;
-        enabledPins = configurationService.getEnabledPins();
     }
 
     public void postConstruct() {
@@ -27,28 +25,28 @@ public class GPIOServiceImpl implements GPIOService {
 
         pins = new GpioPinDigitalOutput[16];
 
-
-        pins[0] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, label(0) , state(0));
-        pins[1] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, label(1) , state(1));
-        pins[2] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, label(2) , state(2));
-        pins[3] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, label(3) , state(3));
-        pins[4] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, label(4) , state(4));
-        pins[5] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, label(5) , state(5));
-        pins[6] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, label(6) , state(6));
-        pins[7] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(7) , state(7));
-        pins[8] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_09, label(8) , state(8));
-        pins[9] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, label(9) , state(9));
-        pins[10] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11, label(10) , state(10));
-        pins[11] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, label(11) , state(11));
-        pins[12] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, label(12) , state(12));
-        pins[13] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14, label(13) , state(13));
-        pins[14] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15, label(14) , state(14));
-        pins[15] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16, label(15) , state(15));
+        pins[0] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, label(1) , state(1));
+        pins[1] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, label(2) , state(2));
+        pins[2] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, label(3) , state(3));
+        pins[3] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, label(4) , state(4));
+        pins[4] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, label(5) , state(5));
+        pins[5] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, label(6) , state(6));
+        pins[6] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, label(7) , state(7));
+        pins[7] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(8) , state(8));
+        pins[8] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_09, label(9) , state(9));
+        pins[9] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, label(10) , state(10));
+        pins[10] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11, label(11) , state(11));
+        pins[11] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_12, label(12) , state(12));
+        pins[12] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, label(13) , state(13));
+        pins[13] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_14, label(14) , state(14));
+        pins[14] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15, label(15) , state(15));
+        pins[15] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16, label(16) , state(16));
 
 
     }
 
     private PinState state(int index) {
+        boolean[] enabledPins = configurationService.getEnabledPins();
         if (enabledPins != null && index <= enabledPins.length && enabledPins[index]) {
             return pins[index].getState();
         } else {
@@ -89,6 +87,7 @@ public class GPIOServiceImpl implements GPIOService {
     @Override
     public boolean disableAll() {
         int i=0;
+        boolean[] enabledPins = configurationService.getEnabledPins();
         for (GpioPinDigitalOutput pin : pins) {
             if (enabledPins[i++]) {
                 logger.info("PIN "+pin.getName()+" FROM "+pin.getState().toString()+" TO "+PinState.LOW.toString());
@@ -103,6 +102,7 @@ public class GPIOServiceImpl implements GPIOService {
     @Override
     public boolean enableAll() {
         int i=0;
+        boolean[] enabledPins = configurationService.getEnabledPins();
         for (GpioPinDigitalOutput pin : pins) {
             if (enabledPins[i++]) {
                 logger.info("PIN "+pin.getName()+" FROM "+pin.getState().toString()+" TO "+PinState.HIGH.toString());

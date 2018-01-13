@@ -54,7 +54,7 @@ public class SelfTestService {
         scheduledJob.add(test);
     }
 
-    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "* * * * * *",initialDelay = 60000L)
     public void scheduleTaskUsingCronExpression() {
         logger.debug("Look for Self Test");
 
