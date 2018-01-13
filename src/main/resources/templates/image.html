@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="${title}">Title</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div th:replace="fragments/menu :: menu"/>
+		<div th:utext="${svg}"/>
+	</div>
+
+
+</body>
+</html>
