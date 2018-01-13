@@ -62,7 +62,6 @@ public class BelobogServiceApplication {
 			return new GPIOFakeServiceImpl();
 		} else if (applicationMode.equals(ApplicationMode.live)) {
 			GPIOServiceImpl gpioService = new GPIOServiceImpl();
-			gpioService.postConstruct();
 			return gpioService;
 		} else {
 			throw new IllegalArgumentException("UNSUPPORTED MODE "+applicationMode);
