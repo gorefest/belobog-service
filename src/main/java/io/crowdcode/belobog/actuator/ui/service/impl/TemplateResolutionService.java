@@ -8,6 +8,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class TemplateResolutionService{
+
+    private String template;
+
+    @PostConstruct
+    public void postConstruct() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:"+configurationService.getTemplate());
+        try (InputStream inputStream = resource.getInputStream();
+             BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
+            template = buffer.lines().collect(Collectors.joining("\n"));
+        }
+    }
 
     public static final Logger LOGGER=LoggerFactory.getLogger(TemplateResolutionService.class);
 
@@ -26,18 +38,10 @@ public class TemplateResolutionService{
         ConfigurationService configurationService;
 
         public void prepareImageTemplate(Model model) throws IOException {
-            Resource resource = resourceLoader.getResource("classpath:"+configurationService.getTemplate());
-            InputStream inputStream = resource.getInputStream();
 
             String template="";
 
-            LOGGER.info("FOO");
-
-            try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
-                template = buffer.lines().collect(Collectors.joining("\n"));
-            }
-
-            template = configurationService.prepareSvg(template);
+            template = configurationService.prepareSvg(this.template);
             model.addAttribute("svg", template);
         }
 }

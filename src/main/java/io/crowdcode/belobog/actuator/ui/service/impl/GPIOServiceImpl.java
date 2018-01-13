@@ -2,9 +2,13 @@ package io.crowdcode.belobog.actuator.ui.service.impl;
 
 import com.pi4j.io.gpio.*;
 import io.crowdcode.belobog.actuator.ui.service.GPIOService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class GPIOServiceImpl implements GPIOService {
+
+    public static final Logger logger = LoggerFactory.getLogger(GPIOServiceImpl.class);
 
     private final ConfigurationService configurationService;
 
@@ -45,10 +49,10 @@ public class GPIOServiceImpl implements GPIOService {
     }
 
     private PinState state(int index) {
-        if (enabledPins == null || index > enabledPins.length || !enabledPins[index]) {
-            return PinState.LOW;
+        if (enabledPins != null && index <= enabledPins.length && enabledPins[index]) {
+            return pins[index].getState();
         } else {
-            return PinState.HIGH;
+            return PinState.LOW;
         }
     }
 
@@ -68,13 +72,17 @@ public class GPIOServiceImpl implements GPIOService {
 
     @Override
     public boolean setEnabled(int pin) {
-        pins[pin].setState(PinState.HIGH);
+        GpioPinDigitalOutput gpioPin = pins[pin];
+        logger.info("PIN "+gpioPin.getName()+" FROM "+gpioPin.getState().toString()+" TO "+PinState.HIGH.toString());
+        gpioPin.setState(PinState.HIGH);
         return true;
     }
 
     @Override
     public boolean setDisabled(int pin) {
-        pins[pin].setState(PinState.LOW);
+        GpioPinDigitalOutput gpioPin = pins[pin];
+        logger.info("PIN "+gpioPin.getName()+" FROM "+gpioPin.getState().toString()+" TO "+PinState.LOW.toString());
+        gpioPin.setState(PinState.LOW);
         return true;
     }
 
@@ -83,7 +91,10 @@ public class GPIOServiceImpl implements GPIOService {
         int i=0;
         for (GpioPinDigitalOutput pin : pins) {
             if (enabledPins[i++]) {
+                logger.info("PIN "+pin.getName()+" FROM "+pin.getState().toString()+" TO "+PinState.LOW.toString());
                 pin.setState(PinState.LOW);
+            } else {
+                logger.info("PIN "+pin.getName()+" IS DISABLED AND SKIPPED");
             }
         }
         return true;
@@ -94,7 +105,10 @@ public class GPIOServiceImpl implements GPIOService {
         int i=0;
         for (GpioPinDigitalOutput pin : pins) {
             if (enabledPins[i++]) {
+                logger.info("PIN "+pin.getName()+" FROM "+pin.getState().toString()+" TO "+PinState.HIGH.toString());
                 pin.setState(PinState.HIGH);
+            } else {
+                logger.info("PIN "+pin.getName()+" IS DISABLED AND SKIPPED");
             }
         }
         return true;
