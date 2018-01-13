@@ -21,7 +21,7 @@ public class GPIOServiceImpl implements GPIOService {
         // create gpio controller
         gpio = GpioFactory.getInstance();
 
-        pins = new GpioPinDigitalOutput[8];
+        pins = new GpioPinDigitalOutput[16];
 
 
         pins[0] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, label(0) , state(0));
@@ -32,6 +32,14 @@ public class GPIOServiceImpl implements GPIOService {
         pins[5] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, label(5) , state(5));
         pins[6] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, label(6) , state(6));
         pins[7] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(7) , state(7));
+        pins[8] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(8) , state(8));
+        pins[9] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(9) , state(9));
+        pins[10] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(10) , state(10));
+        pins[11] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(11) , state(11));
+        pins[12] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(12) , state(12));
+        pins[13] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(13) , state(13));
+        pins[14] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(14) , state(14));
+        pins[15] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, label(15) , state(15));
 
 
     }
