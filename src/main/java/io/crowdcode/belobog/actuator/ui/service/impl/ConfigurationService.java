@@ -50,6 +50,7 @@ public class ConfigurationService {
     boolean[] enabledSlots;
     Integer[] slot2Pin;
     boolean[] enabledPins;
+    boolean[] activePins;
 
     @Autowired
     private Environment env;
@@ -69,6 +70,7 @@ public class ConfigurationService {
         slot2Pin = new Integer[numberOfSlots];
         enabledSlots = new boolean[numberOfSlots];
         enabledPins=new boolean[128];
+        activePins=new boolean[128];
         for (int i = 1; i <= numberOfSlots; i++) {
             slotEnabledStyles[i-1]  =getProperty("slot"+i+".enabled.style", defaultEnabledStyle);
             slotDisabledStyles[i-1] =getProperty("slot"+i+".disabled.style", defaultDisabledStyle);
@@ -77,8 +79,12 @@ public class ConfigurationService {
             slotLabels[i-1] = getProperty("slot"+i+".title","slot "+i);
             enabledSlots[i-1] = Boolean.valueOf(getProperty("slot"+i+".isEnabled", Boolean.valueOf(defaultIsEnabled).toString()));
             Integer pin = slot2Pin[i-1];
-            boolean active = enabledSlots[i-1];
-            enabledPins[pin] = active;
+            boolean enabled = enabledSlots[i-1];
+            enabledPins[pin] = enabled;
+
+            boolean active = activeSlots[i-1];
+            activePins[pin] = active;
+
         }
 
     }
@@ -202,7 +208,8 @@ public class ConfigurationService {
         return enabledSlots;
     }
 
-    public boolean[] getEnabledPins(){
-        return enabledPins;
+
+    public boolean[] getActivePins() {
+        return activePins;
     }
 }
