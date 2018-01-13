@@ -1,11 +1,8 @@
 package io.crowdcode.belobog.actuator.ui.service.impl;
 
 import io.crowdcode.belobog.actuator.ui.service.GPIOService;
-import javafx.beans.binding.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -13,7 +10,6 @@ import org.thymeleaf.context.AbstractContext;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
-import java.util.Properties;
 
 @Service
 public class ConfigurationService {
