@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
+
 
 public class GPIOServiceImpl implements GPIOService {
 
@@ -17,6 +19,7 @@ public class GPIOServiceImpl implements GPIOService {
     @Autowired
     ConfigurationService configurationService;
 
+    @PostConstruct
     public void postConstruct() {
         // create gpio controller
         gpio = GpioFactory.getInstance();
