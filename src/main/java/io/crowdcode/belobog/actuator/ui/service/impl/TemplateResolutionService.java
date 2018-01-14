@@ -20,6 +20,9 @@ public class TemplateResolutionService{
 
     private String template;
 
+    @Autowired
+    ConfigurationService configurationService;
+
     @PostConstruct
     public void postConstruct() throws IOException {
         Resource resource = resourceLoader.getResource("classpath:"+configurationService.getTemplate());
@@ -35,13 +38,13 @@ public class TemplateResolutionService{
         private ResourceLoader resourceLoader;
 
         @Autowired
-        ConfigurationService configurationService;
+        SvgService svgService;
 
         public void prepareImageTemplate(Model model) throws IOException {
 
             String template="";
 
-            template = configurationService.prepareSvg(this.template);
+            template = svgService.prepareSvg(this.template);
             model.addAttribute("svg", template);
         }
 }

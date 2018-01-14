@@ -60,9 +60,6 @@ public class ConfigurationService {
     @Autowired
     private Environment env;
 
-    @Autowired
-    GPIOService gpioService;
-
     @PostConstruct
     public void postConstruct(){
 
@@ -122,50 +119,13 @@ public class ConfigurationService {
         return template;
     }
 
-    public void prepareSvgContext(AbstractContext context){
-        for (int i = 0; i < numberOfSlots; i++){
-            if (activeSlots[i]){
-                Integer pin = slot2Pin[i];
-                boolean isSet = gpioService.isGPIOEnabled(pin);
-                String activeState="slot"+(i+1)+".style";
-                if (isSet) {
-                    context.setVariable(activeState, slotEnabledStyles[i]);
-                } else {
-                    context.setVariable(activeState, slotDisabledStyles[i]);
-                }
-            }
-        }
-    }
-
-
-    public String prepareSvg(String context){
-        for (int i = 0; i < numberOfSlots; i++){
-            if (activeSlots[i]){
-                Integer pin = slot2Pin[i];
-                boolean isSet = gpioService.isGPIOEnabled(pin);
-                String activeState="${slot"+(i+1)+".style}";
-                String state="${slot"+(i+1)+".state}";
-                if (isSet) {
-                    context = context.replace(activeState, slotEnabledStyles[i]);
-                    context = context.replace(state, "ENABLED");
-                } else {
-                    context = context.replace(activeState, slotDisabledStyles[i]);
-                    context = context.replace(state, "DISABLED");
-                }
-
-                context = context.replace("${slot"+(i+1)+".title}", slotLabels[i]);
-
-            }
-        }
-        return context;
-    }
 
 
 
     public void prepareStandardModel(Model model) {
         model.addAttribute("title", getApplicationWelcome());
 
-        String uptime = String.format(getApplicationUptime(), gpioService.getStartTime());
+        String uptime = String.format(getApplicationUptime(), GPIOService.started);
         model.addAttribute("message", uptime);
 
         model.addAttribute("date", new Date());
