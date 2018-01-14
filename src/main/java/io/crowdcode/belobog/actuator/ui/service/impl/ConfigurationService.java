@@ -43,7 +43,7 @@ public class ConfigurationService {
     @Value("${slot.default.isEnabled}")
     Boolean defaultIsEnabled;
 
-    @Value("slot.default.invertHiLo")
+    @Value("${slot.default.invertHiLo}")
     Boolean defaultInvertedHiLo;
 
     String[] slotEnabledStyles;
