@@ -43,6 +43,9 @@ public class ConfigurationService {
     @Value("${slot.default.isEnabled}")
     Boolean defaultIsEnabled;
 
+    @Value("slot.default.invertHiLo")
+    Boolean defaultInvertedHiLo;
+
     String[] slotEnabledStyles;
     String[] slotDisabledStyles;
     String[] slotLabels;
@@ -51,6 +54,8 @@ public class ConfigurationService {
     Integer[] slot2Pin;
     boolean[] enabledPins;
     boolean[] activePins;
+    boolean[] invertHiLo;
+    boolean[] invertHiLoPins;
 
     @Autowired
     private Environment env;
@@ -61,16 +66,18 @@ public class ConfigurationService {
     @PostConstruct
     public void postConstruct(){
 
-
-
         slotDisabledStyles=new String[numberOfSlots];
         slotEnabledStyles=new String[numberOfSlots];
         slotLabels = new String[numberOfSlots];
         activeSlots = new boolean[numberOfSlots];
         slot2Pin = new Integer[numberOfSlots];
         enabledSlots = new boolean[numberOfSlots];
+        invertHiLo=new boolean[numberOfSlots];
+
         enabledPins=new boolean[128];
         activePins=new boolean[128];
+        invertHiLoPins=new boolean[128];
+
         for (int i = 1; i <= numberOfSlots; i++) {
             slotEnabledStyles[i-1]  =getProperty("slot"+i+".enabled.style", defaultEnabledStyle);
             slotDisabledStyles[i-1] =getProperty("slot"+i+".disabled.style", defaultDisabledStyle);
@@ -78,12 +85,19 @@ public class ConfigurationService {
             slot2Pin[i-1] = Integer.valueOf(getProperty("slot"+i+".gpioPin","-1"));
             slotLabels[i-1] = getProperty("slot"+i+".title","slot "+i);
             enabledSlots[i-1] = Boolean.valueOf(getProperty("slot"+i+".isEnabled", Boolean.valueOf(defaultIsEnabled).toString()));
+            invertHiLo[i-1] = Boolean.valueOf(getProperty("slot"+i+".invertHiLo", Boolean.valueOf(defaultInvertedHiLo).toString()));
+
             Integer pin = slot2Pin[i-1];
+
+            // map slot attributes to specific GPIO pins
             boolean enabled = enabledSlots[i-1];
             enabledPins[pin] = enabled;
 
             boolean active = activeSlots[i-1];
             activePins[pin] = active;
+
+            boolean invert = invertHiLo[i-1];
+            invertHiLoPins[pin] = invert;
 
         }
 
@@ -208,8 +222,11 @@ public class ConfigurationService {
         return enabledSlots;
     }
 
-
     public boolean[] getActivePins() {
         return activePins;
+    }
+
+    public boolean[] getInvertHiLoPins() {
+        return invertHiLoPins;
     }
 }

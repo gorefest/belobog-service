@@ -48,8 +48,15 @@ public class GPIOServiceImpl implements GPIOService {
 
     private PinState state(int index) {
         boolean[] enabledPins = configurationService.getActivePins();
+        boolean invertHiLo = configurationService.getInvertHiLoPins()[index];
         if (enabledPins != null && index <= enabledPins.length && enabledPins[index]) {
-            return enabledPins[index] ? PinState.HIGH : PinState.LOW;
+            if (invertHiLo) {
+                return enabledPins[index] ? PinState.LOW : PinState.HIGH;
+            }
+            else {
+                return enabledPins[index] ? PinState.HIGH : PinState.LOW;
+            }
+
         } else {
             return PinState.LOW;
         }
@@ -66,33 +73,38 @@ public class GPIOServiceImpl implements GPIOService {
 
     @Override
     public boolean isGPIOEnabled(int pin) {
-        return pins[pin].isHigh();
+        boolean invertHiLo = configurationService.getInvertHiLoPins()[pin];
+        return invertHiLo ? pins[pin].isLow() : pins[pin].isHigh();
     }
 
     @Override
     public boolean setEnabled(int pin) {
         GpioPinDigitalOutput gpioPin = pins[pin];
-        logger.info("PIN "+gpioPin.getName()+" FROM "+gpioPin.getState().toString()+" TO "+PinState.HIGH.toString());
-        gpioPin.setState(PinState.HIGH);
+        boolean invertHiLo = configurationService.getInvertHiLoPins()[pin];
+        logger.info("PIN "+gpioPin.getName()+" (inverted "+invertHiLo+") FROM "+gpioPin.getState().toString()+" TO "+PinState.HIGH.toString());
+        gpioPin.setState(invertHiLo ? PinState.LOW : PinState.HIGH);
         return true;
     }
 
     @Override
     public boolean setDisabled(int pin) {
         GpioPinDigitalOutput gpioPin = pins[pin];
-        logger.info("PIN "+gpioPin.getName()+" FROM "+gpioPin.getState().toString()+" TO "+PinState.LOW.toString());
-        gpioPin.setState(PinState.LOW);
+        boolean invertHiLo = configurationService.getInvertHiLoPins()[pin];
+        logger.info("PIN "+gpioPin.getName()+" (inverted "+invertHiLo+") FROM "+gpioPin.getState().toString()+" TO "+PinState.LOW.toString());
+        gpioPin.setState(invertHiLo ? PinState.HIGH : PinState.LOW);
         return true;
     }
 
     @Override
     public boolean disableAll() {
         int i=0;
-        boolean[] enabledPins = configurationService.getActivePins();
+        boolean[] activePins = configurationService.getActivePins();
+        boolean[] invertHiLo = configurationService.getInvertHiLoPins();
         for (GpioPinDigitalOutput pin : pins) {
-            if (enabledPins[i++]) {
-                logger.info("PIN "+pin.getName()+" FROM "+pin.getState().toString()+" TO "+PinState.LOW.toString());
-                pin.setState(PinState.LOW);
+            if (activePins[i++]) {
+                boolean invert = invertHiLo[i];
+                logger.info("PIN "+pin.getName()+" (inverted "+invert+") FROM "+pin.getState().toString()+" TO "+PinState.LOW.toString());
+                pin.setState(invert ? PinState.HIGH : PinState.LOW);
             } else {
                 logger.info("PIN "+pin.getName()+" IS DISABLED AND SKIPPED");
             }
@@ -104,10 +116,12 @@ public class GPIOServiceImpl implements GPIOService {
     public boolean enableAll() {
         int i=0;
         boolean[] enabledPins = configurationService.getActivePins();
+        boolean[] invertHiLo = configurationService.getInvertHiLoPins();
         for (GpioPinDigitalOutput pin : pins) {
             if (enabledPins[i++]) {
-                logger.info("PIN "+pin.getName()+" FROM "+pin.getState().toString()+" TO "+PinState.HIGH.toString());
-                pin.setState(PinState.HIGH);
+                boolean invert = invertHiLo[i];
+                logger.info("PIN "+pin.getName()+" (inverted "+invert+") FROM "+pin.getState().toString()+" TO "+PinState.HIGH.toString());
+                pin.setState(invert ? PinState.LOW : PinState.HIGH);
             } else {
                 logger.info("PIN "+pin.getName()+" IS DISABLED AND SKIPPED");
             }
