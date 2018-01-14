@@ -14,14 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * to the socket.
  */
 @Controller
-public class PowerOffController {
+public class PowerController {
 
     @Autowired
     GPIOService gpioService;
 
     @RequestMapping("/poweroff")
-    public String selftest(Model model) {
+    public String poweroff(Model model) {
         gpioService.disableAll();
+        return "redirect:image";
+    }
+
+    @RequestMapping("/poweron")
+    public String poweron(Model model) {
+        gpioService.enableAll();
         return "redirect:image";
     }
 
