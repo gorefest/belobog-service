@@ -49,7 +49,7 @@ public class GPIOServiceImpl implements GPIOService {
     private PinState state(int index) {
         boolean[] enabledPins = configurationService.getActivePins();
         boolean invertHiLo = configurationService.getInvertHiLoPins()[index];
-        if (enabledPins != null && index <= enabledPins.length && enabledPins[index]) {
+        if (enabledPins != null && index < enabledPins.length && enabledPins[index]) {
             if (invertHiLo) {
                 return enabledPins[index] ? PinState.LOW : PinState.HIGH;
             }
@@ -64,7 +64,7 @@ public class GPIOServiceImpl implements GPIOService {
 
     private String label(int index) {
         String[] slotLabels = configurationService.getSlotLabels();
-        if (slotLabels == null ||  index > slotLabels.length  || slotLabels[index] == null || slotLabels[index].trim().isEmpty()){
+        if (slotLabels == null ||  index >= slotLabels.length  || slotLabels[index] == null || slotLabels[index].trim().isEmpty()){
             return "PIN "+index;
         } else {
             return slotLabels[index];
