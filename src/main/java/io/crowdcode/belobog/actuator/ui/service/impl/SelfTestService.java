@@ -138,6 +138,8 @@ class ScheduledSelfTest implements Runnable{
                             logger.error(step +" DID NOT ENABLE! THIS MUST BE CHECKED");
                         }
 
+                        Thread.sleep(500);
+
                         if (gpioService.setDisabled(pins[i])) {
                             logger.warn(step + " MAPPED TO " + pins[i] + " DID THE JOB.");
                             if (!gpioService.isGPIOEnabled(pins[i])) {

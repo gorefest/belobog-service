@@ -26,6 +26,7 @@ public class GPIOServiceImpl implements GPIOService {
 
         pins = new GpioPinDigitalOutput[16];
 
+
         pins[0] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, label(1) , state(1));
         pins[1] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, label(2) , state(2));
         pins[2] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, label(3) , state(3));
