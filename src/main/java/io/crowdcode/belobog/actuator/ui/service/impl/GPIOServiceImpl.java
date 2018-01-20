@@ -102,13 +102,14 @@ public class GPIOServiceImpl implements GPIOService {
         boolean[] activePins = configurationService.getActivePins();
         boolean[] invertHiLo = configurationService.getInvertHiLoPins();
         for (GpioPinDigitalOutput pin : pins) {
-            if (activePins[i++]) {
+            if (activePins[i]) {
                 boolean invert = invertHiLo[i];
                 logger.info("PIN "+pin.getName()+" (inverted "+invert+") FROM "+pin.getState().toString()+" TO "+PinState.LOW.toString());
                 pin.setState(invert ? PinState.HIGH : PinState.LOW);
             } else {
                 logger.info("PIN "+pin.getName()+" IS DISABLED AND SKIPPED");
             }
+            i++;
         }
         return true;
     }
@@ -119,13 +120,14 @@ public class GPIOServiceImpl implements GPIOService {
         boolean[] enabledPins = configurationService.getActivePins();
         boolean[] invertHiLo = configurationService.getInvertHiLoPins();
         for (GpioPinDigitalOutput pin : pins) {
-            if (enabledPins[i++]) {
+            if (enabledPins[i]) {
                 boolean invert = invertHiLo[i];
                 logger.info("PIN "+pin.getName()+" (inverted "+invert+") FROM "+pin.getState().toString()+" TO "+PinState.HIGH.toString());
                 pin.setState(invert ? PinState.LOW : PinState.HIGH);
             } else {
                 logger.info("PIN "+pin.getName()+" IS DISABLED AND SKIPPED");
             }
+            i++;
         }
         return true;
     }
