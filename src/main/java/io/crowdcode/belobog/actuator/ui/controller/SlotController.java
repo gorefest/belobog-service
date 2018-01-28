@@ -44,7 +44,7 @@ public class SlotController {
 
         configurationService.prepareStandardModel(model);
         templateResolutionService.prepareImageTemplate(model);
-        return "image";
+        return "redirect:/image";
     }
 
 }
