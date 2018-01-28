@@ -91,13 +91,13 @@
      showguides="false"
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
-     inkscape:window-x="3192"
+     inkscape:window-x="1760"
      inkscape:window-height="1017"
      inkscape:window-width="1920"
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="394.05243"
+     inkscape:cy="559.52167"
      inkscape:cx="400.29678"
      inkscape:zoom="0.96694709"
      inkscape:pageshadow="2"
@@ -196,7 +196,8 @@
        href="/switch/slot7"
        id="slot7.link"
        transform="matrix(1.5432837,0,0,1.3635003,-323.16603,-249.9863)">
-      <ellipse style="${slot7.style}"
+      <ellipse
+         style="${slot7.style}"
          id="slot7"
          cx="534.87579"
          cy="649.31134"
@@ -1488,7 +1489,8 @@
        href="/switch/slot2"
        id="slot2.link"
        transform="matrix(1.5432837,0,0,1.3635003,-183.23761,-87.382958)">
-      <ellipse style="${slot2.style}"
+      <ellipse
+         style="${slot2.style}"
          id="slot2"
          cx="534.87579"
          cy="649.31134"
@@ -1502,7 +1504,8 @@
        href="/switch/slot3"
        id="slot3.link"
        transform="matrix(1.5432837,0,0,1.3635003,-175.99833,-784.42213)">
-      <ellipse style="${slot3.style}"
+      <ellipse
+         style="${slot3.style}"
          id="slot3"
          cx="534.87579"
          cy="649.31134"
@@ -1515,8 +1518,8 @@
     <a
        href="/switch/slot4"
        id="slot4.link"
-       transform="matrix(1.5432837,0,0,1.3635003,-680.67951,-501.05605)">
-      <ellipse style="${slot4.style}"
+       transform="matrix(2.4286348,0,0,2.1332656,-1110.7967,-1054.6509)">
+      <ellipse
          id="slot4"
          cx="534.87579"
          cy="649.31134"
@@ -1529,8 +1532,8 @@
     <a
        href="/switch/slot5"
        id="slot5.link"
-       transform="matrix(1.5432837,0,0,1.3635003,-601.04744,-48.084012)">
-      <ellipse style="${slot5.style}"
+       transform="matrix(2.2676619,0,0,1.9408243,-1001.9442,-436.90847)">
+      <ellipse
          id="slot5"
          cx="534.87579"
          cy="649.31134"
@@ -1543,8 +1546,8 @@
     <a
        href="/switch/slot6"
        id="slot6.link"
-       transform="matrix(1.5432837,0,0,1.3635003,-733.42283,-146.33138)">
-      <ellipse style="${slot6.style}"
+       transform="matrix(2.3079051,0,0,2.0905008,-1122.7509,-600.79996)">
+      <ellipse
          id="slot6"
          cx="534.87579"
          cy="649.31134"
@@ -1552,6 +1555,20 @@
          ry="24.183073">
         <title
            id="slot6.title">${slot6.title}</title>
+      </ellipse>
+    </a>
+    <a
+       href="/switch/slot8"
+       id="slot8.link"
+       transform="matrix(2.6097294,0,0,2.4112363,-1241.2708,-998.8297)">
+      <ellipse
+         id="slot8"
+         cx="534.87579"
+         cy="649.31134"
+         rx="25.698301"
+         ry="24.183073">
+        <title
+           id="slot8.title">${slot8.title}</title>
       </ellipse>
     </a>
   </g>
