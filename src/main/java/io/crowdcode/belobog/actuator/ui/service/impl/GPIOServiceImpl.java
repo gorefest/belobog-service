@@ -24,7 +24,7 @@ public class GPIOServiceImpl implements GPIOService {
         // create gpio controller
         gpio = GpioFactory.getInstance();
 
-        pins = new GpioPinDigitalOutput[16];
+        pins = new GpioPinDigitalOutput[configurationService.numberOfPins]; // THIS SUCKS! GPIO IS DANGLED FIXED!
 
 
         pins[0] = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, label(0) , state(0));
@@ -131,4 +131,5 @@ public class GPIOServiceImpl implements GPIOService {
         }
         return true;
     }
+
 }

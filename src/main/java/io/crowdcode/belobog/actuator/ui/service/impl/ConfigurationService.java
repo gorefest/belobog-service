@@ -1,5 +1,7 @@
 package io.crowdcode.belobog.actuator.ui.service.impl;
 
+import io.crowdcode.belobog.actuator.ui.model.PinInfo;
+import io.crowdcode.belobog.actuator.ui.model.SlotInfo;
 import io.crowdcode.belobog.actuator.ui.service.GPIOService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +13,9 @@ import org.springframework.ui.Model;
 import org.thymeleaf.context.AbstractContext;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ConfigurationService {
@@ -27,6 +31,8 @@ public class ConfigurationService {
     @Value("${application.template}")
     private String template;
 
+    @Value("${application.numberOfPins}")
+    Integer numberOfPins;
 
     @Value("${application.numberOfGPIOSlots}")
     Integer numberOfSlots;
@@ -188,5 +194,35 @@ public class ConfigurationService {
 
     public boolean[] getInvertHiLoPins() {
         return invertHiLoPins;
+    }
+
+    public SlotInfo createSlotInfo(Integer number) {
+        SlotInfo result = new SlotInfo();
+        result.setActivated(activePins[slot2Pin[number]]);
+        result.setEnabled(enabledSlots[number]);
+        result.setInvertHiLo(invertHiLo[number]);
+        result.setSlotNumber(number);
+        result.setTitle(slotLabels[number]);
+        result.setPinNumber(slot2Pin[number]);
+
+        return result;
+    }
+
+    public List<PinInfo> getPinMap() {
+        List<PinInfo> result = new ArrayList<>();
+        boolean[] pins = new boolean[numberOfPins];
+
+        for (int i = 0; i < numberOfSlots; i++) {
+            pins[slot2Pin[i]] = true;
+        }
+
+        int i = 1;
+        for (boolean pin : pins) {
+            PinInfo info = new PinInfo();
+            info.setPin(i++);
+            info.setEnabled(pin);
+            result.add(info);
+        }
+        return result;
     }
 }

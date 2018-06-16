@@ -1470,18 +1470,18 @@
        inkscape:transform-center-x="-13.162997"
        inkscape:transform-center-y="15.356852" />
     <a
-       href="/switch/slot1"
-       id="slot1.link"
+       href="/switch/slot16"
+       id="slot16.link"
        transform="matrix(1.5432837,0,0,1.3635003,-463.50114,-94.622233)">
       <ellipse
-         style="${slot1.style}"
-         id="slot1"
+         style="${slot16.style}"
+         id="slot16"
          cx="534.87579"
          cy="649.31134"
          rx="25.698301"
          ry="24.183073">
         <title
-           id="slot1.title">${slot1.title}</title>
+           id="slot16.title">${slot16.title}</title>
       </ellipse>
     </a>
     <a
